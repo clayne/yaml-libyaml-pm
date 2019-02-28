@@ -16,6 +16,7 @@ our ($UseCode, $DumpCode, $LoadCode, $Boolean, $LoadBlessed, $Indent);
 # $YAML::XS::LoadCode = 0;
 
 $YAML::XS::QuoteNumericStrings = 1;
+$YAML::XS::QuoteAllStrings = 0;
 
 use YAML::XS::LibYAML qw(Load Dump);
 use Scalar::Util qw/ openhandle /;

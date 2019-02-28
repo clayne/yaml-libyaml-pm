@@ -44,6 +44,7 @@ typedef struct {
     int dump_bool_jsonpp;
     int dump_bool_boolean;
     int quote_number_strings;
+    int quote_all_strings;
 } perl_yaml_dumper_t;
 
 static SV *

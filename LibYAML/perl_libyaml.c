@@ -678,6 +678,11 @@ set_dumper_options(perl_yaml_dumper_t *dumper)
         SvTRUE(GvSV(gv)))
     );
 
+    dumper->quote_all_strings = (
+        ((gv = gv_fetchpv("YAML::XS::QuoteAllStrings", TRUE, SVt_PV)) &&
+        SvTRUE(GvSV(gv)))
+    );
+
     gv = gv_fetchpv("YAML::XS::Boolean", FALSE, SVt_PV);
     dumper->dump_bool_jsonpp = 0;
     dumper->dump_bool_boolean = 0;
@@ -1103,6 +1108,7 @@ dump_scalar(perl_yaml_dumper_t *dumper, SV *node, yaml_char_t *tag)
             strEQ(string, "false") ||
             strEQ(string, "null") ||
             (SvTYPE(node_clone) >= SVt_PVGV) ||
+            ( dumper->quote_all_strings && !SvNIOK(node_clone) ) ||
             ( dumper->quote_number_strings && !SvNIOK(node_clone) && looks_like_number(node_clone) )
         ) {
             style = YAML_SINGLE_QUOTED_SCALAR_STYLE;

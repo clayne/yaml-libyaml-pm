@@ -65,6 +65,12 @@ functions. Only `Load` and `Dump` are exported by default.
   This ensures leading that things like leading zeros and other formatting are
   preserved.
 
+- `$YAML::XS::QuoteAllStrings`
+  When true all strings are single quoted regardless of implicit type.
+
+  This ensures that implicit type conversions do not happen as a result of
+  emitting unquoted strings that other YAML parsers may choose to interpret.
+
 - `$YAML::XS::Boolean` (since v0.67)
 
   Default is undef.

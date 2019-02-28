@@ -1,6 +1,6 @@
 use FindBin '$Bin';
 use lib $Bin;
-use TestYAMLTests tests => 6;
+use TestYAMLTests tests => 8;
 
 my ($a, $b, $c, $d) = (42, "42", 42, "42");
 my $e = ">$c<";
@@ -76,3 +76,26 @@ is Dump($num, $float, $str), <<'...', "Round tripping integers and strings";
 
 }
 
+{
+local $YAML::XS::QuoteAllStrings = 1;
+
+is Dump($a, $b, $c, $d), <<'...', "Dumping Integers and Strings";
+--- '42'
+--- '42'
+--- '42'
+--- '42'
+...
+
+my ($num, $float, $str) = Load(<<'...');
+--- '42'
+--- '0.333'
+--- '02134'
+...
+
+is Dump($num, $float, $str), <<'...', "Round tripping integers and strings";
+--- '42'
+--- '0.333'
+--- '02134'
+...
+
+}
